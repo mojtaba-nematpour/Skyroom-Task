@@ -1,4 +1,9 @@
+# IDE/OS Auto Generated Files and Folders
 .idea
 .DS_store
 
+# Application Confidential Files
+/App/Config/Database.php
+
+# Application Dynamic Files and Folders
 /vendor
