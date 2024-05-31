@@ -10,9 +10,9 @@ class Request
 
     private array $attributes = [];
 
-    private array $query;
+    private array $queries;
 
-    private array $request;
+    private array $requests;
 
     private array $files;
 
@@ -21,8 +21,8 @@ class Request
         $this->uri = (string)$_SERVER['REQUEST_URI'];
         $this->method = (string)$_SERVER['REQUEST_METHOD'];
 
-        $this->query = $_GET;
-        $this->request = $_POST;
+        $this->queries = $_GET;
+        $this->requests = $_POST;
         $this->files = $_FILES;
     }
 
@@ -36,23 +36,23 @@ class Request
         return $this->method;
     }
 
-    public function attr(string $name): bool|int|string|null
+    public function attrs(string $name = null): mixed
     {
-        return $this->attributes[$name] ?? null;
+        return $name === null ? $this->attributes : $this->attributes[$name] ?? null;
     }
 
-    public function query(string $name): bool|int|string|null
+    public function queries(string $name = null): mixed
     {
-        return $this->query[$name] ?? null;
+        return $name === null ? $this->queries : $this->queries[$name] ?? null;
     }
 
-    public function request(string $name): bool|int|string|null
+    public function requests(string $name = null): mixed
     {
-        return $this->request[$name] ?? null;
+        return $name === null ? $this->requests : $this->requests[$name] ?? null;
     }
 
-    public function file(string $name): array|null
+    public function files(string $name = null): mixed
     {
-        return $this->files[$name] ?? null;
+        return $name === null ? $this->files : $this->files[$name] ?? null;
     }
 }
