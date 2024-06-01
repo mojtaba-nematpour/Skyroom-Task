@@ -4,5 +4,9 @@
 			"Core\\": "Core/",
 			"App\\": "App/"
 		}
+	},
+	"require": {
+		"ext-pdo": "*",
+		"php": ">=8.2"
 	}
 }
