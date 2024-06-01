@@ -10,9 +10,11 @@ class Response
     {
     }
 
-    public function setContent(string $content): void
+    public function setContent(string $content): static
     {
         $this->content = $content;
+
+        return $this;
     }
 
     public function getContent(): string
@@ -20,9 +22,11 @@ class Response
         return $this->content;
     }
 
-    public function setStatusCode($statusCode): void
+    public function setStatusCode($statusCode): static
     {
         $this->statusCode = $statusCode;
+
+        return $this;
     }
 
     public function getStatusCode(): int
@@ -30,9 +34,11 @@ class Response
         return $this->statusCode;
     }
 
-    public function setHeader($name, $value): void
+    public function setHeader($name, $value): static
     {
         $this->headers[$name] = $value;
+
+        return $this;
     }
 
     public function getHeaders(): array

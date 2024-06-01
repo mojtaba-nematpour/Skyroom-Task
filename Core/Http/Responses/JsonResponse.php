@@ -10,8 +10,8 @@ class JsonResponse extends Response
         'Content-type' => 'application/json'
     ];
 
-    public function setContent($content): void
+    public function setContent($content): static
     {
-        parent::setContent(json_encode($content));
+        return parent::setContent(json_encode($content));
     }
 }
