@@ -2,58 +2,83 @@
 
 namespace Core\Basic;
 
+use Core\Command\Command;
 use Core\Database\Connection;
 use Core\Enum\KernelType;
 use Core\Http\Controller;
 use Core\Http\Request;
 use Core\Http\Response;
+use Core\Http\Responses\IOResponse;
 use Exception;
 use ReflectionMethod;
 
+/**
+ * @Kernel of the application
+ */
 class Kernel
 {
+    /**
+     * @var Router Router service
+     */
     protected Router $router;
 
+    /**
+     * @var Connection Database connection(PDO)
+     */
     protected Connection $connection;
 
-    public function __construct(KernelType $kernelType = KernelType::Http)
+    /**
+     * @param KernelType $kernelType specifying the kernel type (Http Request | Console Command)
+     */
+    public function __construct(private readonly KernelType $kernelType = KernelType::Http)
     {
+        /**
+         * Load database config for connection
+         */
         $config = require __DIR__ . '/../../App/Config/Database.php';
 
+        /**
+         * Only on Http requests
+         */
         if ($kernelType === KernelType::Http) {
+            /**
+             * Load routes
+             */
             $routes = require __DIR__ . '/../../App/Config/Route.php';
             $this->router = new Router();
             $routes($this->router);
         }
 
+        /**
+         * Start db connection
+         */
         $this->connection = new Connection($config);
     }
 
-    public function run()
+    public function find(string $command): IOResponse
     {
-        
-    }
-
-    public function handle(Request $request): Response
-    {
+        $response = new IOResponse();
         try {
-            $matchedRoute = $this->router->match($request);
-
-            $controller = $matchedRoute[0];
-            $method = $matchedRoute[1];
+            $command = "App\\Command\\" . ucfirst($command) . "Command";
 
             /**
-             * @var Controller $controller
+             * Check for command existence
              */
-            $controller = new $controller();
-            if (!method_exists($controller, $method)) {
-                $controller = get_class($controller);
-                throw new Exception("$controller does not respond to the $method action.");
+            if (!class_exists($command)) {
+                return $response->setContent("Command $command not fund");
             }
 
             $parameters = [];
-            $reflectedMethod = new ReflectionMethod($controller, $method);
+
+            /**
+             * @var Command $command
+             */
+            $command = new $command();
+            $reflectedMethod = new ReflectionMethod($command, 'run');
             $services = $reflectedMethod->getParameters();
+            /**
+             * Instantiate the services to inject in command run
+             */
             foreach ($services as $service) {
                 $serviceName = $service->getType()->getName();
                 if (!class_exists($serviceName)) {
@@ -63,13 +88,83 @@ class Kernel
                 $parameters[] = new $serviceName();
             }
 
+            /**
+             * Load command basic needs
+             */
+            $command->setModelManager($this->connection);
+
+            /**
+             * Inject the services in controller method
+             */
+            return $command->run(...$parameters);
+        } catch (Exception $e) {
+            $response->setContent($e->getMessage());
+        }
+
+        return $response;
+    }
+
+    /**
+     * Handles the Http requests
+     *
+     * @param Request $request current request
+     *
+     * @return Response controller response
+     */
+    public function handle(Request $request): Response
+    {
+        try {
+            /**
+             * Match the route and find the specified controller based on method
+             */
+            $matchedRoute = $this->router->match($request);
+
+            $controller = $matchedRoute[0];
+            $function = $matchedRoute[1];
+
+            /**
+             * Check if the controller has proper function based on method
+             *
+             * @var Controller $controller
+             */
+            $controller = new $controller();
+            if (!method_exists($controller, $function)) {
+                $controller = get_class($controller);
+                throw new Exception("$controller does not respond to the $function action.");
+            }
+
+            $parameters = [];
+            $reflectedMethod = new ReflectionMethod($controller, $function);
+            $services = $reflectedMethod->getParameters();
+            /**
+             * Instantiate the services to inject in controller method
+             */
+            foreach ($services as $service) {
+                $serviceName = $service->getType()->getName();
+                $parameters[] = new $serviceName();
+            }
+
+            /**
+             * Load controllers basic needs
+             */
             $controller->setRequest($request)->setModelManager($this->connection);
 
-            return $controller->$method(...$parameters);
+            /**
+             * Inject the services in controller method
+             */
+            return $controller->$function(...$parameters);
         } catch (Exception $e) {
             $response = new Response($e->getMessage(), 404);
         }
 
         return $response;
+    }
+
+    /**
+     * @return KernelType
+     */
+    public function getType(): KernelType
+    {
+        return $this->kernelType;
     }
 }
