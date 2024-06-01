@@ -2,6 +2,8 @@
 
 namespace Core\Basic;
 
+use Core\Database\Connection;
+use Core\Enum\KernelType;
 use Core\Http\Controller;
 use Core\Http\Request;
 use Core\Http\Response;
@@ -10,8 +12,26 @@ use ReflectionMethod;
 
 class Kernel
 {
-    public function __construct(protected Router $router)
+    protected Router $router;
+
+    protected Connection $connection;
+
+    public function __construct(KernelType $kernelType = KernelType::Http)
     {
+        $config = require __DIR__ . '/../../App/Config/Database.php';
+
+        if ($kernelType === KernelType::Http) {
+            $routes = require __DIR__ . '/../../App/Config/Route.php';
+            $this->router = new Router();
+            $routes($this->router);
+        }
+
+        $this->connection = new Connection($config);
+    }
+
+    public function run()
+    {
+        
     }
 
     public function handle(Request $request): Response
@@ -43,7 +63,7 @@ class Kernel
                 $parameters[] = new $serviceName();
             }
 
-            $controller->setRequest($request);
+            $controller->setRequest($request)->setModelManager($this->connection);
 
             return $controller->$method(...$parameters);
         } catch (Exception $e) {
