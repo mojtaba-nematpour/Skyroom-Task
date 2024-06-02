@@ -28,11 +28,13 @@ class Router
      * @param string $controller classname
      * @param string $method controller function
      *
-     * @return void
+     * @return Router
      */
-    public function get(string $uri, string $controller, string $method): void
+    public function get(string $uri, string $controller, string $method): static
     {
         $this->routes['GET'][$uri] = [$controller, $method];
+
+        return $this;
     }
 
     /**
@@ -42,11 +44,13 @@ class Router
      * @param string $controller classname
      * @param string $method controller function
      *
-     * @return void
+     * @return Router
      */
-    public function post(string $uri, string $controller, string $method): void
+    public function post(string $uri, string $controller, string $method): static
     {
         $this->routes['POST'][$uri] = [$controller, $method];
+
+        return $this;
     }
 
     /**
@@ -56,11 +60,13 @@ class Router
      * @param string $controller classname
      * @param string $method controller function
      *
-     * @return void
+     * @return Router
      */
-    public function delete(string $uri, string $controller, string $method): void
+    public function delete(string $uri, string $controller, string $method): static
     {
         $this->routes['DELETE'][$uri] = [$controller, $method];
+
+        return $this;
     }
 
     /**
@@ -77,8 +83,15 @@ class Router
         $uri = $request->getUri();
         $method = $request->getMethod();
 
-        if (array_key_exists($uri, $this->routes[$method])) {
-            return $this->routes[$method][$uri];
+        foreach (array_keys($this->routes[$method]) as $route) {
+            $pattern = str_replace('/', '\/', $route);
+            if (preg_match("/^$pattern$/m", $uri, $attributes)) {
+                foreach ($attributes as $order => $value) {
+                    $request->setAttr($order, $value);
+                }
+
+                return $this->routes[$method][$route];
+            }
         }
 
         throw new Exception('No route defined for this URI.');

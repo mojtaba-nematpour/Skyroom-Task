@@ -4,6 +4,7 @@ namespace Core\Database;
 
 use Core\Basic\Messages;
 use Core\Http\Form;
+use DateTimeImmutable;
 use Exception;
 use PDO;
 use PDOException;
@@ -160,7 +161,7 @@ class Connection
             /**
              * To string the DateTimeImmutable columns
              */
-            if ($value instanceof \DateTimeImmutable) {
+            if ($value instanceof DateTimeImmutable) {
                 $values[$bind] = $value->format("Y-m-d H:i:s");
             }
 
@@ -177,6 +178,93 @@ class Connection
             $model->setId($this->pdo->lastInsertId());
         } else {
             $model = array_merge($form, ['id' => $this->pdo->lastInsertId()]);
+        }
+
+        return $model;
+    }
+
+    /**
+     * @param string $model
+     * @param array $wheres
+     * @param array|Form $form
+     *
+     * @return array|object
+     *
+     * @throws Exception
+     */
+    public function update(string $model, array $wheres, array|Form $form): array|object
+    {
+        if (count($wheres) <= 0) {
+            throw new Exception("Where Clauses shouldn't be empty");
+        }
+
+        $name = $model::Name;
+        $schema = $model::Schema;
+
+        $sets = [];
+        $values = $form;
+        /**
+         * To string the columns and bind columns
+         */
+        foreach ($schema as $column => $structure) {
+            /**
+             * Ignore PRIMARY key and ID fields
+             */
+            if (empty($column) || str_contains($structure, 'AUTO')) {
+                continue;
+            }
+
+            $sets[] = "`$column` = :$column";
+        }
+
+        if ($form instanceof Form) {
+            $values = $form->getData();
+        }
+
+        $wheresClauses = [];
+        /**
+         * To string the where clauses
+         */
+        foreach ($wheres as $column => $value) {
+            $equal = "= '$value'";
+            /**
+             * Make it null check-able
+             */
+            if ($value === null) {
+                $equal = 'IS NULL';
+            }
+
+            $wheresClauses[] = "`$column` $equal";
+        }
+
+        $sets = implode(',', $sets);
+        $wheresClauses = implode(' AND ', $wheresClauses);
+
+        $stmt = $this->pdo->prepare("UPDATE `$name` SET $sets WHERE $wheresClauses");
+
+        /**
+         * Bind parameters value
+         */
+        foreach ($values as $bind => $value) {
+            /**
+             * To string the DateTimeImmutable columns
+             */
+            if ($value instanceof DateTimeImmutable) {
+                $values[$bind] = $value->format("Y-m-d H:i:s");
+            }
+
+            $stmt->bindParam(":$bind", $values[$bind]);
+        }
+
+        $this->execute($stmt);
+
+        /**
+         * Denormalize if it's a FormRequest otherwise an array
+         */
+        if ($form instanceof Form) {
+            $model = $form->getData();
+        } else {
+            $model = $form;
         }
 
         return $model;
@@ -256,13 +344,6 @@ class Connection
          * Denormalize if it's a FormRequest otherwise an array
          */
         foreach ($results as $result) {
-            if ($form instanceof Form) {
-                $form->setData($result);
-
-                $models[] = $form->denormalize($model);
-                continue;
-            }
-
             $models[] = $result;
         }
 
@@ -302,5 +383,75 @@ class Connection
 
         $stmt = $this->pdo->prepare("DELETE FROM `$name` WHERE $wheres;");
         $this->execute($stmt);
+    }
+
+    /**
+     * Search for a value in all model columns
+     *
+     * @param string $model
+     * @param array|Form $form
+     *
+     * @return array
+     */
+    public function search(string $model, array|Form $form): array
+    {
+        $name = $model::Name;
+        $schema = $model::Schema;
+
+        $modelData = $form;
+        if ($form instanceof Form) {
+            $modelData = $form->getData();
+        }
+
+        $wheres = [];
+        /**
+         * To string the where clauses
+         */
+        foreach ($modelData as $column => $value) {
+            $wheres[] = "`$column` LIKE '$value'";
+        }
+
+        $columns = [];
+        /**
+         * To string the columns
+         */
+        foreach ($schema as $column => $structure) {
+            if (empty($column)) {
+                continue;
+            }
+
+            $columns[] = "`$column`";
+        }
+
+        $columns = implode(',', $columns);
+        $wheres = implode(' OR ', $wheres);
+
+        if (!empty($wheres)) {
+            $wheres = "WHERE $wheres";
+        }
+
+        $stmt = $this->pdo->prepare("SELECT $columns FROM `$name` $wheres;");
+        $this->execute($stmt);
+
+        /**
+         * On finding nothing
+         */
+        if ($stmt->rowCount() < 0) {
+            return [];
+        }
+
+        $models = [];
+        /**
+         * TODO::Needs a pagination
+         */
+        $results = $stmt->fetchAll();
+        /**
+         * Denormalize if it's a FormRequest otherwise an array
+         */
+        foreach ($results as $result) {
+            $models[] = $result;
+        }
+
+        return $models;
     }
 }
