@@ -192,7 +192,7 @@ class Connection
      *
      * @throws Exception
      */
-    public function find(string $model, array|Form $form): array|object
+    public function find(string $model, array|Form $form = []): array|object
     {
         $name = $model::Name;
         $schema = $model::Schema;
@@ -233,7 +233,11 @@ class Connection
         $columns = implode(',', $columns);
         $wheres = implode(' AND ', $wheres);
 
-        $stmt = $this->pdo->prepare("SELECT $columns FROM `$name` WHERE $wheres;");
+        if (!empty($wheres)) {
+            $wheres = "WHERE $wheres";
+        }
+
+        $stmt = $this->pdo->prepare("SELECT $columns FROM `$name` $wheres;");
         $this->execute($stmt);
 
         /**
