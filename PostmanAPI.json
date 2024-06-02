@@ -1,0 +1,1027 @@
+{
+	"info": {
+		"_postman_id": "2fa842a9-dfc9-4335-b017-915b1ec17f48",
+		"name": "V1",
+		"description": "Version 1 APIs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26008927"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Requested-With",
+								"value": "XMLHttpRequest",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "mojey",
+									"description": "Registered Admin Username",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "Aa123456",
+									"description": "Registered Admin Password",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{ServerAddress}}/{{V}}/auth/login",
+							"host": [
+								"{{ServerAddress}}"
+							],
+							"path": [
+								"{{V}}",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "X-Requested-With",
+										"value": "XMLHttpRequest",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "username",
+											"value": "mojey",
+											"description": "Registered Admin Username",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "Aa123456",
+											"description": "Registered Admin Password",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{ServerAddress}}/{{V}}/auth/login",
+									"host": [
+										"{{ServerAddress}}"
+									],
+									"path": [
+										"{{V}}",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Jun 2024 06:17:56 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.3.2"
+								},
+								{
+									"key": "Content-type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"_token\": \"4b197f0de767ae00fb978f738d724fe6\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Requested-With",
+								"value": "XMLHttpRequest",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "fullname",
+									"value": "mojtaba nematpour",
+									"description": "Admin Fullname",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "mojey",
+									"description": "Admin Username (Used for login)",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "mjtba.nmtpr@gmail.com",
+									"description": "Admin Email",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "Aa123456",
+									"description": "Admin Login Password",
+									"type": "text"
+								},
+								{
+									"key": "confirmPassword",
+									"value": "Aa123456",
+									"description": "Password Confirmation",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{ServerAddress}}/{{V}}/auth/register",
+							"host": [
+								"{{ServerAddress}}"
+							],
+							"path": [
+								"{{V}}",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Register",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "X-Requested-With",
+										"value": "XMLHttpRequest",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "username",
+											"value": "mojey",
+											"description": "Registered Admin Username",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "Aa123456",
+											"description": "Registered Admin Password",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{ServerAddress}}/{{V}}/auth/login",
+									"host": [
+										"{{ServerAddress}}"
+									],
+									"path": [
+										"{{V}}",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Jun 2024 06:17:56 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.3.2"
+								},
+								{
+									"key": "Content-type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"_token\": \"4b197f0de767ae00fb978f738d724fe6\"\n}"
+						}
+					]
+				}
+			],
+			"description": "Admin Authentication"
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Search",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Requested-With",
+								"value": "XMLHttpRequest",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{ServerAddress}}/{{V}}/users/find/0939",
+							"host": [
+								"{{ServerAddress}}"
+							],
+							"path": [
+								"{{V}}",
+								"users",
+								"find",
+								"0939"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Search",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "X-Requested-With",
+										"value": "XMLHttpRequest",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{ServerAddress}}/{{V}}/users/find/0939",
+									"host": [
+										"{{ServerAddress}}"
+									],
+									"path": [
+										"{{V}}",
+										"users",
+										"find",
+										"0939"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Jun 2024 08:00:11 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.3.2"
+								},
+								{
+									"key": "Content-type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"id\": 1,\n            \"firstname\": \"Mojtaba\",\n            \"lastname\": \"Nematpour\",\n            \"email\": \"mjtba.nmtpr@gmail.com\",\n            \"mobile\": \"09397870891\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "List",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Requested-With",
+								"value": "XMLHttpRequest",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{ServerAddress}}/{{V}}/users",
+							"host": [
+								"{{ServerAddress}}"
+							],
+							"path": [
+								"{{V}}",
+								"users"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "List",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "X-Requested-With",
+										"value": "XMLHttpRequest",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{ServerAddress}}/{{V}}/users",
+									"host": [
+										"{{ServerAddress}}"
+									],
+									"path": [
+										"{{V}}",
+										"users"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Jun 2024 06:17:37 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.3.2"
+								},
+								{
+									"key": "Content-type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"id\": 1,\n            \"firstname\": \"Mojtaba\",\n            \"lastname\": \"Nematpour\",\n            \"email\": \"mjtba.nmtpr@gmail.com\",\n            \"mobile\": \"09397870891\"\n        },\n        {\n            \"id\": 5,\n            \"firstname\": \"Alireza\",\n            \"lastname\": \"Nematpour\",\n            \"email\": \"alireza.nmtpr@gmail.com\",\n            \"mobile\": \"09337870891\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "View",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Requested-With",
+								"value": "XMLHttpRequest",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{ServerAddress}}/{{V}}/users/1",
+							"host": [
+								"{{ServerAddress}}"
+							],
+							"path": [
+								"{{V}}",
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "View",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "X-Requested-With",
+										"value": "XMLHttpRequest",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{ServerAddress}}/{{V}}/users/1",
+									"host": [
+										"{{ServerAddress}}"
+									],
+									"path": [
+										"{{V}}",
+										"users",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Jun 2024 06:15:12 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.3.2"
+								},
+								{
+									"key": "Content-type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"user\": {\n        \"id\": 1,\n        \"firstname\": \"Mojtaba\",\n        \"lastname\": \"Nematpour\",\n        \"email\": \"mjtba.nmtpr@gmail.com\",\n        \"mobile\": \"09397870891\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "New",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Requested-With",
+								"value": "XMLHttpRequest",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "firstname",
+									"value": "moein",
+									"type": "text"
+								},
+								{
+									"key": "lastname",
+									"value": "nematpour",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "moein.nmtpr@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "mobile",
+									"value": "09037870891",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{ServerAddress}}/{{V}}/users",
+							"host": [
+								"{{ServerAddress}}"
+							],
+							"path": [
+								"{{V}}",
+								"users"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "X-Requested-With",
+										"value": "XMLHttpRequest",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "firstname",
+											"value": "moein",
+											"type": "text"
+										},
+										{
+											"key": "lastname",
+											"value": "nematpour",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "moein.nmtpr@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "mobile",
+											"value": "09037870891",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{ServerAddress}}/{{V}}/users",
+									"host": [
+										"{{ServerAddress}}"
+									],
+									"path": [
+										"{{V}}",
+										"users"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Jun 2024 06:20:24 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.3.2"
+								},
+								{
+									"key": "Content-type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"user\": 8,\n    \"messages\": [\n        \"کاربر جدید ایجاد شد\"\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Edit",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Requested-With",
+								"value": "XMLHttpRequest",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "firstname",
+									"value": "mojtaba",
+									"description": "User Firstname",
+									"type": "text"
+								},
+								{
+									"key": "lastname",
+									"value": "nematpour",
+									"description": "User Lastname",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "mjtba.nmtpr@gmail.com",
+									"description": "User Email",
+									"type": "text"
+								},
+								{
+									"key": "mobile",
+									"value": "09397870891",
+									"description": "User Mobile",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{ServerAddress}}/{{V}}/users/1",
+							"host": [
+								"{{ServerAddress}}"
+							],
+							"path": [
+								"{{V}}",
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Edit",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "X-Requested-With",
+										"value": "XMLHttpRequest",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "firstname",
+											"value": "mojtaba",
+											"description": "User Firstname",
+											"type": "text"
+										},
+										{
+											"key": "lastname",
+											"value": "nematpour",
+											"description": "User Lastname",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "mjtba.nmtpr@gmail.com",
+											"description": "User Email",
+											"type": "text"
+										},
+										{
+											"key": "mobile",
+											"value": "09397870891",
+											"description": "User Mobile",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{ServerAddress}}/{{V}}/users/1",
+									"host": [
+										"{{ServerAddress}}"
+									],
+									"path": [
+										"{{V}}",
+										"users",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Jun 2024 07:46:35 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.3.2"
+								},
+								{
+									"key": "Content-type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"user\": {\n        \"firstname\": \"Mojtaba\",\n        \"lastname\": \"Nematpour\",\n        \"email\": \"mjtba.nmtpr@gmail.com\",\n        \"mobile\": \"09397870891\"\n    },\n    \"messages\": [\n        \"اطلاعات کاربر ویرایش شد\"\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Remove",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Requested-With",
+								"value": "XMLHttpRequest",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{ServerAddress}}/{{V}}/users/8",
+							"host": [
+								"{{ServerAddress}}"
+							],
+							"path": [
+								"{{V}}",
+								"users",
+								"8"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Remove",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "X-Requested-With",
+										"value": "XMLHttpRequest",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{ServerAddress}}/{{V}}/users/8",
+									"host": [
+										"{{ServerAddress}}"
+									],
+									"path": [
+										"{{V}}",
+										"users",
+										"8"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 02 Jun 2024 06:27:06 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.3.2"
+								},
+								{
+									"key": "Content-type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"messages\": [\n        \"کاربر انتخاب شده حذف شد\"\n    ]\n}"
+						}
+					]
+				}
+			],
+			"description": "User Section CRUD",
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{JWT}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "V",
+			"value": "v1"
+		}
+	]
+}
