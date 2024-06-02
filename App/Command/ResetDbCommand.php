@@ -8,14 +8,18 @@ use App\Models\User;
 use Core\Command\Command;
 use Core\Http\Responses\IOResponse;
 
-class InitCommand extends Command
+class ResetDbCommand extends Command
 {
     public function run(): IOResponse
     {
+        $this->connection->removeTable(Admin::class)
+            ->removeTable(Token::class)
+            ->removeTable(User::class);
+
         $this->connection->createTable(Admin::class)
             ->createTable(Token::class)
             ->createTable(User::class);
 
-        return $this->io('Successfully Created `Admin` && `Token` && `User` ');
+        return $this->io('Successfully Resets `Admin` && `Token` && `User` ');
     }
 }
