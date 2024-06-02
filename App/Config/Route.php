@@ -4,8 +4,8 @@ use App\Controllers\V1 as V1;
 use Core\Basic\Router;
 
 return function (Router $router) {
-    $router->post('/v1/auth/login', V1\AuthController::class, 'login')
-        ->post('/v1/auth/register', V1\AuthController::class, 'register');
+    $router->post('/v1/auth/login', V1\AuthController::class, 'login', 0)
+        ->post('/v1/auth/register', V1\AuthController::class, 'register', 0);
 
     $router->get('/v1/users/find/(\d.*|[a-zA-z].*)', V1\UserController::class, 'search')
         ->get('/v1/users', V1\UserController::class, 'index')

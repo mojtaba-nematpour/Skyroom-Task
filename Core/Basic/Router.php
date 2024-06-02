@@ -27,12 +27,13 @@ class Router
      * @param string $uri
      * @param string $controller classname
      * @param string $method controller function
+     * @param bool $guard
      *
      * @return Router
      */
-    public function get(string $uri, string $controller, string $method): static
+    public function get(string $uri, string $controller, string $method, bool $guard = true): static
     {
-        $this->routes['GET'][$uri] = [$controller, $method];
+        $this->routes['GET'][$uri] = [$controller, $method, $guard];
 
         return $this;
     }
@@ -43,12 +44,13 @@ class Router
      * @param string $uri
      * @param string $controller classname
      * @param string $method controller function
+     * @param bool $guard
      *
      * @return Router
      */
-    public function post(string $uri, string $controller, string $method): static
+    public function post(string $uri, string $controller, string $method, bool $guard = true): static
     {
-        $this->routes['POST'][$uri] = [$controller, $method];
+        $this->routes['POST'][$uri] = [$controller, $method, $guard];
 
         return $this;
     }
@@ -59,12 +61,13 @@ class Router
      * @param string $uri
      * @param string $controller classname
      * @param string $method controller function
+     * @param bool $guard
      *
      * @return Router
      */
-    public function delete(string $uri, string $controller, string $method): static
+    public function delete(string $uri, string $controller, string $method, bool $guard = true): static
     {
-        $this->routes['DELETE'][$uri] = [$controller, $method];
+        $this->routes['DELETE'][$uri] = [$controller, $method, $guard];
 
         return $this;
     }
@@ -85,6 +88,9 @@ class Router
 
         foreach (array_keys($this->routes[$method]) as $route) {
             $pattern = str_replace('/', '\/', $route);
+            /**
+             * Convert URI into pattern
+             */
             if (preg_match("/^$pattern$/m", $uri, $attributes)) {
                 foreach ($attributes as $order => $value) {
                     $request->setAttr($order, $value);
@@ -94,6 +100,8 @@ class Router
             }
         }
 
-        throw new Exception('No route defined for this URI.');
+        throw new Exception(json_encode([
+            'errors' => Messages::get('errors', 'routeMissMatched')
+        ]), 404);
     }
 }

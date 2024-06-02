@@ -13,6 +13,8 @@ class Request
 
     private array $attributes = [];
 
+    public string $token;
+
     private array $queries;
 
     private array $requests;
@@ -23,6 +25,7 @@ class Request
     {
         $this->uri = (string)$_SERVER['REQUEST_URI'];
         $this->method = (string)$_SERVER['REQUEST_METHOD'];
+        $this->token = substr($_SERVER['HTTP_AUTHORIZATION'] ?? '', 7);
 
         $this->queries = $_GET;
         $this->requests = $_POST;

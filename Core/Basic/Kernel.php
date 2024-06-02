@@ -2,6 +2,7 @@
 
 namespace Core\Basic;
 
+use App\Models\Token;
 use Core\Command\Command;
 use Core\Database\Connection;
 use Core\Enum\KernelType;
@@ -9,6 +10,7 @@ use Core\Http\Controller;
 use Core\Http\Request;
 use Core\Http\Response;
 use Core\Http\Responses\IOResponse;
+use DateTimeImmutable;
 use Exception;
 use ReflectionMethod;
 
@@ -121,6 +123,20 @@ class Kernel
 
             $controller = $matchedRoute[0];
             $function = $matchedRoute[1];
+            $guard = $matchedRoute[2];
+
+            if ((bool)$guard === true) {
+                /**
+                 * @var Token[] $token
+                 */
+                $tokens = $this->connection->find(Token::class, [
+                    'value' => $request->token
+                ]);
+
+                if (count($tokens) <= 0 || $tokens[0]['expiresAt'] > new DateTimeImmutable()) {
+                    throw new Exception(json_encode(['errors' => "توکن یافت نشد یا منقضی شده"]), 403);
+                }
+            }
 
             /**
              * Check if the controller has proper function based on method
@@ -130,7 +146,7 @@ class Kernel
             $controller = new $controller();
             if (!method_exists($controller, $function)) {
                 $controller = get_class($controller);
-                throw new Exception("$controller does not respond to the $function action.");
+                throw new Exception(json_encode(['errors' => "$controller does not respond to the $function action."]), 400);
             }
 
             $parameters = [];

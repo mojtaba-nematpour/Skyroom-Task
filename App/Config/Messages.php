@@ -28,6 +28,7 @@ return [
     ],
     'errors' => [
         '404' => 'اطلاعات مورد نظر یافت نشد',
+        'routeMissMatched' => 'No route defined for this URI.',
         'badCredentials' => 'نام کاربری یا رمزعبور اشتباه است'
     ],
     'messages' => [

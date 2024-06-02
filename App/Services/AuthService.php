@@ -12,15 +12,16 @@ class AuthService
 {
     private ?Connection $connection = null;
 
-    public function authenticate(AuthenticateAble $authenticateAble): string
+    public function authenticate(array|AuthenticateAble $authenticateAble): string
     {
+        $id = $authenticateAble instanceof AuthenticateAble ? $authenticateAble->getId() : $authenticateAble['id'] ?? 0;
         $this->connection->remove(Token::class, [
-            'user' => $authenticateAble->getId()
+            'user' => $id
         ]);
 
         $tokenRequest = new TokenForm();
         $tokenRequest->setData([
-            'user' => $authenticateAble->getId(),
+            'user' => $id,
             'value' => $token = md5(random_int(0, 9999999)),
             'expiresAt' => new DateTimeImmutable('+15 minutes')
         ]);
