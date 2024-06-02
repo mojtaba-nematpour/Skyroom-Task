@@ -5,8 +5,16 @@ namespace Core\Http;
 use Core\Database\Connection;
 use Core\Http\Responses\JsonResponse;
 
+/**
+ * Core controller interface
+ */
 class Controller
 {
+    /**
+     * Current Http request
+     *
+     * @var Request|null
+     */
     protected ?Request $request = null;
 
     protected ?Connection $connection = null;
@@ -29,6 +37,14 @@ class Controller
         return $this;
     }
 
+    /**
+     * Creates a proper json response to rest api
+     *
+     * @param mixed $data
+     * @param int $status response status code 0 to whatever
+     *
+     * @return JsonResponse
+     */
     protected function json(mixed $data, int $status = 200): JsonResponse
     {
         $response = new JsonResponse();

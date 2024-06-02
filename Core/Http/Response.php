@@ -2,6 +2,9 @@
 
 namespace Core\Http;
 
+/**
+ * Core class to interact with Kernel responses
+ */
 class Response
 {
     protected array $headers = [];

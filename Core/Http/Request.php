@@ -2,6 +2,9 @@
 
 namespace Core\Http;
 
+/**
+ * Core class to interact with requests and router URI helper
+ */
 class Request
 {
     protected string $uri;

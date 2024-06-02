@@ -25,7 +25,7 @@ class LoginForm extends Form
 
     public function filter(): static
     {
-        foreach ($this->data as $datum => $value)  {
+        foreach ($this->data as $datum => $value) {
             $this->data[$datum] = match ($datum) {
                 'username' => strtolower($value),
                 'password' => sha1($value),

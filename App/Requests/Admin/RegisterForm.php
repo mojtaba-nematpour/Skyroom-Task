@@ -48,7 +48,7 @@ class RegisterForm extends Form
 
     public function filter(): static
     {
-        foreach ($this->data as $datum => $value)  {
+        foreach ($this->data as $datum => $value) {
             $this->data[$datum] = match ($datum) {
                 'fullname' => ucfirst($value),
                 'username', 'email' => strtolower($value),
