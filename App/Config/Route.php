@@ -7,5 +7,7 @@ return function (Router $router) {
     $router->post('/v1/auth/login', V1\AuthController::class, 'login');
     $router->post('/v1/auth/register', V1\AuthController::class, 'register');
 
+    $router->get('/v1/users', V1\UserController::class, 'index');
+
     return $router;
 };
