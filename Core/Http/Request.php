@@ -111,4 +111,11 @@ class Request
 
         return $this;
     }
+
+    public function setRequests(array $requests): static
+    {
+        $this->requests = $requests;
+
+        return $this;
+    }
 }
