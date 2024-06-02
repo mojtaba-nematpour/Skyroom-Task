@@ -5,24 +5,43 @@ namespace Core\Http;
 use Core\Basic\Messages;
 use Exception;
 
-class Form
+abstract class Form
 {
     protected array $options = [
         'allowExtraFields' => false,
         'removeExtraFields' => true
     ];
 
+    protected array $data = [];
+
     protected array $fields = [];
 
-    protected array $guard = [];
+    public array $guard = [];
 
     protected array $validations = [];
 
-    protected ?Request $request;
+    public ?Request $request;
+
+    public function getData(): array
+    {
+        return $this->data;
+    }
+
+    public function setData(array $data): static
+    {
+        foreach ($this->guard as $item) {
+            unset($data[$item]);
+        }
+
+        $this->data = $data;
+
+        return $this;
+    }
 
     public function handle(?Request $request): static
     {
         $this->request = $request;
+        $this->setData($request->requests());
 
         return $this;
     }
@@ -100,15 +119,15 @@ class Form
         }
 
         $model = new $model();
-        foreach ($this->fields as $field) {
-            if (in_array($field, $this->guard))  {
+        foreach ($this->data as $field => $data) {
+            if (in_array($field, $this->guard)) {
                 continue;
             }
 
             $field = ucfirst($field);
             $setMethod = "set$field";
 
-            $model->$setMethod($this->request->requests(lcfirst($field)));
+            $model->$setMethod($data);
         }
 
         return $model;
